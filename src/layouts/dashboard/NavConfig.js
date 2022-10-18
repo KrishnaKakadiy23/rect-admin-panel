@@ -22,6 +22,11 @@ const navConfig = [
     icon: getIcon('ic:baseline-place')
   },
   {
+    title: 'view',
+    path: '/dashboard/view/:_id',
+    icon: getIcon('ic:baseline-place')
+  },
+  {
     title: 'product',
     path: '/dashboard/products',
     icon: getIcon('eva:shopping-bag-fill'),

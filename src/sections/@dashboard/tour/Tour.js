@@ -345,9 +345,9 @@ const Tour = () => {
                     { /* <ListItemIcon>
                       <Iconify icon="eva:trash-2-outline" width={24} height={24} />
                     </ListItemIcon>
-                  <ListItemText primary="Delete" onClick={() => handleDelete(_id)} onClick={() => handleDelete(_id)} primaryTypographyProps={{ variant: 'body2' }} />  <Link to={`view/${_id}`} style={{textDecoration:"none"}} ></Link> */ }
+                  <ListItemText primary="Delete" onClick={() => handleDelete(_id)} onClick={() => navigate(`view/${_id}`)} onClick={() => handleDelete(_id)} primaryTypographyProps={{ variant: 'body2' }} />  <Link to={`view/${_id}`} style={{textDecoration:"none"}} ></Link> */ }
                   <Tooltip title="View">
-                  <IconButton onClick={() => navigate(`view/${_id}`)} ><VisibilityIcon color='primary' />
+                  <IconButton  >  <Link to={`view/${_id}`} style={{textDecoration:"none"}} ><VisibilityIcon color='primary' /></Link>
                   </IconButton>
                   </Tooltip>  
                     <Tooltip title="Edit">
