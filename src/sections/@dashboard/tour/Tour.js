@@ -29,6 +29,7 @@ import {
   Tooltip,
   IconButton,
   TextField,
+  duration,
 } from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -59,6 +60,8 @@ const TABLE_HEAD = [
   { id: 'tourname', label: 'Tour_Name', alignRight: false },
   { id: 'difficulty', label: 'Difficulty', alignRight:false},
   { id: 'price', label: 'Price', alignRight:false},
+  { id: 'duration', label: 'Duration', alignRight:false},
+  { id: 'maxGroupSize', label: 'MaxGroupSize', alignRight:false},
   { id: 'summary', label: 'Summary', alignRight:false},
   // { id: 'description', label: 'Description', alignRight:false},
   { id: 'action' , label: "Actions" , alignRight: true}
@@ -145,7 +148,7 @@ const Tour = () => {
     
 
     CommonService.httpGet(`http://103.206.139.86:5000/api/v1/tours?page=${page}&limit=${rowsPerPage}`,true).then((response) => {
-    //  console.log(response.data);  
+    //  console.log(response.data);  filterName = search value for
     console.log("results",response.data.results);  
         console.log(response.data.data.tours);
         setTours(response.data.data.tours);
@@ -156,23 +159,23 @@ const Tour = () => {
 
   }
 
-//   const handleDelete = async(_id) => {
-//     CommonService.httpDelete(`http://103.206.139.86:5000/api/v1/users/${_id}`,true).then((response) => {
-//       console.log('Successfully deleted user..!!');
-// //       if (response.data.message === 'success') {
-// //           console.log("delete");
-// //     }
-// // })
-// // .catch((error) => {
-// //     console.log("error in delete");  
-// // });
-//       const newdata = users.filter((item) => {
-//         return item._id !== _id;
-//       })
-//       console.log("Deleted!!");
-//         setUsers(newdata);
-//     })
-// }
+  const handleDelete = async(_id) => {
+    CommonService.httpDelete(`http://103.206.139.86:5000/api/v1/tours/${_id}`,true).then((response) => {
+      console.log('Successfully deleted user..!!');
+//       if (response.data.message === 'success') {
+//           console.log("delete");
+//     }
+// })
+// .catch((error) => {
+//     console.log("error in delete");  
+// });
+      const newdata = tours.filter((item) => {
+        return item._id !== _id;
+      })
+      console.log("Deleted!!");
+        setTours(newdata);
+    })
+}
 
 
     const handleRequestSort = (event, property) => {
@@ -257,15 +260,13 @@ const Tour = () => {
           open={open}
           onClose={handleClose}
           >
-          <DialogTitle>Add New User</DialogTitle>
+ { /*        <DialogTitle>Add New User</DialogTitle>  */}
           <DialogContent>
             <DialogContentText>
-                <Adduserform />
+                <Adduserform handleClose={handleClose} />
             </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} style={{marginBottom:10}} variant='contained' color='primary' >Close</Button>
-          </DialogActions>
+          
           </Dialog>
 
       </Stack>
@@ -285,6 +286,9 @@ const Tour = () => {
                 headLabel={TABLE_HEAD}
                 rowCount={tours.length}   
                 // rowCount={users.length} USERLIST usersCount
+          //       <DialogActions>
+          //   <Button onClick={handleClose} style={{marginBottom:10 ,width:"90%", marginRight:28}}  variant='contained' color='primary' fullWidth >Close</Button>
+          // </DialogActions>
                 numSelected={selected.length}
                 onRequestSort={handleRequestSort}
                 onSelectAllClick={handleSelectAllClick}
@@ -292,7 +296,7 @@ const Tour = () => {
 
               <TableBody>
                 { filteredUsers.map((row) => {
-                  const { _id, name, difficulty,price,summary,description, imageCover } = row;
+                  const { _id, name, difficulty,price,summary,description,duration,maxGroupSize, imageCover } = row;
                   const isItemSelected = selected.indexOf(_id) !== -1;
 
                   return (
@@ -305,14 +309,11 @@ const Tour = () => {
                       selected={isItemSelected}
                       aria-checked={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isItemSelected} 
-                        inputProps={{'aria-labelledby': _id}}
-                        // onChange={(event) => handleClick(event, name)}
-                        />
-                      </TableCell>
+                     
                       <TableCell>{_id}</TableCell>
-                     {/* <TableCell component="th" scope="row" padding="none">
+                     {/*
+                      
+                     <TableCell component="th" scope="row" padding="none">
                         <Stack direction="row" alignItems="center" spacing={2}>
                           <Avatar alt={imageCover} src={imageCover} />
                           <img
@@ -331,6 +332,8 @@ const Tour = () => {
                       </TableCell>
                       <TableCell align="left">{difficulty} </TableCell>
                       <TableCell>{price}</TableCell>
+                      <TableCell>{duration}</TableCell>
+                      <TableCell>{maxGroupSize}</TableCell>
                       <TableCell>
                       <Typography variant="subtitle2" noWrap>
                       {summary}  
@@ -346,25 +349,27 @@ const Tour = () => {
                       <Iconify icon="eva:trash-2-outline" width={24} height={24} />
                     </ListItemIcon>
                   <ListItemText primary="Delete" onClick={() => handleDelete(_id)} onClick={() => navigate(`view/${_id}`)} onClick={() => handleDelete(_id)} primaryTypographyProps={{ variant: 'body2' }} />  <Link to={`view/${_id}`} style={{textDecoration:"none"}} ></Link> */ }
-                  <Tooltip title="View">
-                  <IconButton  >  <Link to={`view/${_id}`} style={{textDecoration:"none"}} ><VisibilityIcon color='primary' /></Link>
+                  <Tooltip title="View" >
+                  <IconButton style={{marginLeft:"25px"}} ><Link to={`/dashboard/view/${_id}`} style={{textDecoration:"none"}} ><VisibilityIcon color='primary' /></Link>
                   </IconButton>
                   </Tooltip>  
                     <Tooltip title="Edit">
-                      <IconButton ><Link to={`edituser/${_id}`} style={{textDecoration:"none"}} ><EditIcon color='primary' /></Link>
+                      <IconButton style={{marginLeft:"25px"}} ><Link to={`/dashboard/edit/${_id}`} style={{textDecoration:"none"}} > <EditIcon color='primary' /></Link>
                       </IconButton>
                       </Tooltip>
                   
                     <Tooltip title="Delete" style={{marginTop:'-5px'}} >
-                        <IconButton ><DeleteIcon color='secondary'  />
+                        <IconButton style={{marginLeft:"25px"}} onClick={() => handleDelete(_id)} ><DeleteIcon color='secondary'  />
                         </IconButton>
                     </Tooltip>
-                      
+                   
                     </TableCell>
                     </TableRow>
                   );
                 })}
-               {/* {emptyRows > 0 && (
+               {/*
+               
+                {emptyRows > 0 && (
                   <TableRow >
                     hello
                   </TableRow>

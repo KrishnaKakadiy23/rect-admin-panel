@@ -13,6 +13,7 @@ import DashboardApp from './pages/DashboardApp';
 import  Edituser  from './sections/@dashboard/user/Edituser';
 import Tour from './sections/@dashboard/tour/Tour';
 import ViewTour from './sections/@dashboard/tour/ViewTour';
+import EditTour from './sections/@dashboard/tour/EditTour';
 
 // ----------------------------------------------------------------------
 // { path: 'user/adduser', element: <AddnewUser /> },
@@ -38,6 +39,7 @@ export default function Router() {
         { path: 'user', element: <User /> },
         { path: 'tour', element: <Tour />},
         {path: 'view/:_id' , element: <ViewTour />},
+        { path: 'edit/:_id', element: <EditTour /> },
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
       ],

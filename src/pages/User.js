@@ -300,7 +300,7 @@ export default function User() {
           <Typography variant="h4" gutterBottom>
             User
           </Typography>
-          <Button variant="contained" component={RouterLink} onClick={handleClickOpen} startIcon={<Iconify icon="eva:plus-fill" />}>
+         {/* <Button variant="contained" component={RouterLink} onClick={handleClickOpen} startIcon={<Iconify icon="eva:plus-fill" />}>
             New User
           </Button>
           <Dialog
@@ -319,7 +319,7 @@ export default function User() {
               <Button onClick={handleClose} style={{marginBottom:10}} variant='contained' color='primary' >Close</Button>
             </DialogActions>
             </Dialog>
-
+  */}
         </Stack>
 
         <Card>
@@ -357,12 +357,7 @@ export default function User() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} 
-                          inputProps={{'aria-labelledby': _id}}
-                          // onChange={(event) => handleClick(event, name)}
-                          />
-                        </TableCell>
+                      
                         <TableCell>{_id}</TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
@@ -376,14 +371,22 @@ export default function User() {
 
                         <TableCell align="right">
                       { /* <ListItemIcon>
+                        <TableCell padding="checkbox">
+                          <Checkbox checked={isItemSelected} 
+                          inputProps={{'aria-labelledby': _id}}
+                          // onChange={(event) => handleClick(event, name)}
+                          />
+                        </TableCell>
                         <Iconify icon="eva:trash-2-outline" width={24} height={24} />
                       </ListItemIcon>
-                    <ListItemText primary="Delete" onClick={() => handleDelete(_id)} onClick={() => handleDelete(_id)} primaryTypographyProps={{ variant: 'body2' }} />   */ }
-                        <Tooltip title="Edit">
-                        <IconButton ><Link to={`edituser/${_id}`} style={{textDecoration:"none"}} ><EditIcon color='primary' /></Link>
-                        </IconButton>
+                    <ListItemText primary="Delete" onClick={() => handleDelete(_id)} onClick={() => handleDelete(_id)} primaryTypographyProps={{ variant: 'body2' }} /> 
+                       <Tooltip title="Edit">
+                        <Button variant='contained' ><Link to={`edituser/${_id}`} style={{textDecoration:"none"}} >Edit</Link>
+                        </Button>
                         </Tooltip>
                     
+                  */ }
+                       
                       <Tooltip title="Delete" style={{marginTop:'-5px'}} >
                           <IconButton onClick={() => handleDelete(_id)} ><DeleteIcon color='secondary'  />
                           </IconButton>
@@ -435,10 +438,8 @@ export default function User() {
               onRowsPerPageChange={handleChangeRowsPerPage}
               ActionsComponent={TablePaggination}
             /> 
-              </TableRow> */}
-            </TableContainer>
-          </Scrollbar>
-          <TablePagination
+              </TableRow> 
+                      <TablePagination
           rowsPerPageOptions={[5, 10, 25,50]}
           component="div"
           count={usersCount}
@@ -448,6 +449,11 @@ export default function User() {
           onRowsPerPageChange={handleChangeRowsPerPage}
           ActionsComponent={TablePaggination}
         /> 
+
+            
+            */}
+            </TableContainer>
+          </Scrollbar>
         </Card>
       </Container>
     </Page>

@@ -36,7 +36,15 @@ export default function UserListHead({
   onSelectAllClick,
 }) {
 
-  // console.log('in all check..');
+  console.log('in all check..');
+  <TableCell padding="checkbox">
+          <Checkbox
+          indeterminate={numSelected > 0 && numSelected < rowCount}
+          checked={rowCount > 0 && numSelected === rowCount}
+          onChange={onSelectAllClick}
+          inputProps={{'aria-label': 'select all desserts'}}
+        />
+      </TableCell>
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -44,14 +52,7 @@ export default function UserListHead({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{'aria-label': 'select all desserts'}}
-          />
-        </TableCell>
+        
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}

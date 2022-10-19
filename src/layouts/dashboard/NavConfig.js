@@ -19,12 +19,18 @@ const navConfig = [
   {
     title: 'tour',
     path: '/dashboard/tour',
-    icon: getIcon('ic:baseline-place')
+    icon: getIcon('eva:globe-2-fill')
+    // ic:baseline-place
   },
   {
     title: 'view',
     path: '/dashboard/view/:_id',
-    icon: getIcon('ic:baseline-place')
+    icon: getIcon('eva:eye-fill')
+  },
+  {
+    title: 'edit',
+    path: '/dashboard/edit/:_id',
+    icon: getIcon('eva:edit-2-fill')
   },
   {
     title: 'product',
