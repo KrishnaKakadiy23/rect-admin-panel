@@ -16,6 +16,8 @@ const httpGet = async (requestURL , authorizationRequired) => new Promise((resol
         });
 });
 
+
+
 const httpPostRequestBody = async (requestURL, requestBody, authorizationRequired) => new Promise((resolve, reject) => {
     // text/plain, */*'
     const options = {
@@ -48,6 +50,29 @@ const httpPostRequestBody = async (requestURL, requestBody, authorizationRequire
             reject(error);
         });
 });
+
+const httpPatchRequestBody = async (requestURL, requestBody, authorizationRequired) => new Promise((resolve, reject) => {
+    
+    const userresponse = JSON.parse(localStorage.getItem('token'));
+    const options = {
+
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    if (authorizationRequired && userresponse) {
+        options.headers.Authorization = `Bearer ${userresponse}`
+    }
+    axiosInstance.patch(requestURL, requestBody,options)
+        .then((response) => {
+            resolve(response);
+        })
+        .catch((error) => {
+            reject(error);
+        });
+});
+
+
 
 const httpPutRequestBody = async (requestURL, requestBody, authorizationRequired) => new Promise((resolve, reject) => {
     
@@ -112,7 +137,8 @@ const CommonService = {
     httpDelete,
     httpPutRequestBody,
     httpPostFormData,
-    httpPostRequestBody
+    httpPostRequestBody,
+    httpPatchRequestBody
 };
 
 export default CommonService;

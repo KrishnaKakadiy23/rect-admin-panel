@@ -30,6 +30,8 @@ import {
   IconButton,
   TextField,
   duration,
+  Paper,
+  TableHead,
 } from '@mui/material';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -120,7 +122,10 @@ const Tour = () => {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const [open, setOpen] = useState(false);
+  const [openNewUser, setOpenNewUser] = useState(false);
+
+  const [openUserView, setOpenUserView] = useState(false);
+
 
   const [fullWidth, setFullWidth] = useState(true);
 
@@ -129,11 +134,14 @@ const Tour = () => {
   const navigate = useNavigate();
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenNewUser(true);
+    setOpenUserView(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpenNewUser(false);
+    setOpenUserView(false);
+    getAllUserdata();
   };
 
 
@@ -141,8 +149,9 @@ const Tour = () => {
 
   useEffect(() => {
     getAllUserdata();
-
 }, [rowsPerPage,page]);
+
+
 
    const getAllUserdata = () => {
     
@@ -251,19 +260,19 @@ const Tour = () => {
         <Typography variant="h4" gutterBottom>
           Tour Data
         </Typography>
-        <Button variant="contained" component={RouterLink} onClick={handleClickOpen} startIcon={<Iconify icon="eva:plus-fill" />}>
+        <Button variant="contained" component={RouterLink} onClick={() => setOpenNewUser(true)} startIcon={<Iconify icon="eva:plus-fill" />}>
           New Tour
         </Button>
         <Dialog
           fullWidth={fullWidth}
           maxWidth={maxWidth}
-          open={open}
-          onClose={handleClose}
+          open={openNewUser}
+          onClose={() => setOpenNewUser(false)}
           >
  { /*        <DialogTitle>Add New User</DialogTitle>  */}
           <DialogContent>
             <DialogContentText>
-                <Adduserform handleClose={handleClose} />
+                <Adduserform handleClose={handleClose} id={"0"}/>
             </DialogContentText>
           </DialogContent>
           
@@ -350,9 +359,53 @@ const Tour = () => {
                     </ListItemIcon>
                   <ListItemText primary="Delete" onClick={() => handleDelete(_id)} onClick={() => navigate(`view/${_id}`)} onClick={() => handleDelete(_id)} primaryTypographyProps={{ variant: 'body2' }} />  <Link to={`view/${_id}`} style={{textDecoration:"none"}} ></Link> */ }
                   <Tooltip title="View" >
-                  <IconButton style={{marginLeft:"25px"}} ><Link to={`/dashboard/view/${_id}`} style={{textDecoration:"none"}} ><VisibilityIcon color='primary' /></Link>
+                  <IconButton style={{marginLeft:"25px"}} onClick={() => setOpenUserView(true)} ><VisibilityIcon color='primary' />
                   </IconButton>
                   </Tooltip>  
+                  <Dialog
+                  fullWidth={fullWidth}
+                  maxWidth={maxWidth}
+                  open={openUserView}
+                  onClose={() => setOpenUserView(false)}
+                  >
+         { /*        <DialogTitle>Add New User</DialogTitle>  */}
+                  <DialogContent>
+                    <DialogContentText>
+                          <h3>Helllo user view</h3>
+                          <TableContainer component={Paper} style={{width:"100%"}} >
+                              <Table >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>ID</TableCell>
+                                    <TableCell>Tour Name</TableCell>
+                                    <TableCell>Difficulty</TableCell>
+                                    <TableCell>Price</TableCell>
+                                    <TableCell>Duration</TableCell>
+                                    <TableCell>MaxGroupSize</TableCell>
+                                    <TableCell>Summary</TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                      <TableCell>1</TableCell>
+                                      <TableCell>Balii</TableCell>
+                                      <TableCell>easy</TableCell>
+                                      <TableCell>123</TableCell>
+                                      <TableCell>3</TableCell>
+                                      <TableCell>26</TableCell>
+                                      <TableCell>It was a lovely and memorable trip.</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                              </Table>
+                          </TableContainer>
+                    </DialogContentText>
+                  </DialogContent>
+                    <DialogActions>
+                      <Button variant='contained' onClick={() => setOpenUserView(false)} >Close</Button>
+                    </DialogActions>
+                  </Dialog>
+        
+        
                     <Tooltip title="Edit">
                       <IconButton style={{marginLeft:"25px"}} ><Link to={`/dashboard/edit/${_id}`} style={{textDecoration:"none"}} > <EditIcon color='primary' /></Link>
                       </IconButton>
